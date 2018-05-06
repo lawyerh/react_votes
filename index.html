@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>JS Libraries</title>
+        <!-- bootstrap css -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+        <!-- jQuery -->
+        <script src="node_modules/jquery/dist/jquery.js"></script>
+        <!-- popper -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+        <!-- bootstrap js -->
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script> 
+        <!-- babel -->
+        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+        <!-- react -->
+        <script src="node_modules/react/umd/react.development.js"></script>
+        <!-- react-dom -->
+        <script src="node_modules/react-dom/umd/react-dom.development.js"></script>
+    </head>
+    <body>
+        <div id="app" class="container"></div>
+        <script type="text/babel">
+            
+            const Header = (props) =>
+            {
+                return <div className={'row'}>
+                            <h4 key={'header'} className={'text-primary col-6 mx-auto'}>
+                                {props.text}
+                            </h4>
+                        </div>
+            }
+
+            const Votes = (props) =>
+            {
+                const librariesList = props.libs.map((library) => {
+                    return <li key={library.name} className={"list-group-item"}>
+                                <div className={"container-fluid"}>
+                                    <div className={'row'}>
+                                        <div className={'d-inline-block col-2'}>
+                                            <p className={'text-center'}>
+                                                {library.votes}
+                                            </p>
+                                        </div>
+                                        <p className={'d-inline-block col-6 mx-auto'}>              {library.name}
+                                        </p>
+                                        <button className={"btn btn-sm btn-success col-4 mx-auto"} onClick={incrementVotes.bind(this, library.name)}>
+                                            Vote
+                                        </button> 
+                                    </div>
+                                </div>
+                            </li>
+                })
+                return <ul className={'list-group w-25 mx-auto'}>
+                            {librariesList}
+                        </ul>
+            }
+            
+            function incrementVotes(name)
+            {
+                console.log(name)
+                for(let lib = 0; lib < libs.length; lib ++)
+                {
+                    if(libs[lib].name == name)
+                    {
+                        libs[lib].votes = libs[lib].votes + 1;
+                        console.log(libs[lib].votes);
+                        if(lib > 0)
+                        {
+                            if(libs[lib].votes > libs[lib-1].votes)
+                            {
+                                let temp = libs[lib];
+                                libs[lib] = libs[lib-1];
+                                libs[lib-1] = temp;
+                            }
+                        }
+                    }
+                }
+                const components =
+                [
+                    <Header text={"Vote for your favorite Javascript Library!"} />,
+                    <Votes libs={libs} />
+                ]
+                ReactDOM.render(components, document.getElementById('app'))
+            }
+
+            var libs = [{name: "React", votes: 15}, {name: "Vue", votes: 12}, {name: "Angular", votes: 9}, {name: "Ember", votes: 4}]
+
+            const components = [
+                <Header text={"Vote for your favorite Javascript Library!"} />,
+                <Votes libs={libs} />
+            ]
+                
+            ReactDOM.render(components, document.getElementById('app'))
+        </script>
+        
+    </body>
+</html>
