@@ -1,0 +1,5 @@
+Simple voting app.
+
+First use of JSX/Babel
+
+First use of Babel inline event handling, specifically onClick()
